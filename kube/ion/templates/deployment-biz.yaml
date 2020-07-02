@@ -37,13 +37,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: pionwebrtc/ion-biz:v0.4.6
           command: ["/usr/local/bin/biz", "-c", "/configs/biz.toml"]
-          resources:
-            requests:
-              cpu: 250m
-              memory: 200Mi
-            limits:
-              cpu: 500m
-              memory: 500Mi
+          {{- if .Values.resources }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
           env:
             - name: SERVICE
               value: biz
